@@ -50,6 +50,22 @@ export function usePhotoGallery()
     }
   };
 
+  const deletePhoto = async (photo: UserPhoto) => {
+    // Remove this photo from the Photos reference data array
+    const newPhotos = photos.filter((p) => p.filepath !== photo.filepath);
+  
+    // Update photos array cache by overwriting the existing photo array
+    Preferences.set({ key: PHOTO_STORAGE, value: JSON.stringify(newPhotos) });
+  
+    // delete photo file from filesystem
+    const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);
+    await Filesystem.deleteFile({
+      path: filename,
+      directory: Directory.Data,
+    });
+    setPhotos(newPhotos);
+  };
+
   const [photos, setPhotos] = useState<UserPhoto[]>([]);
 
   useEffect(() => 
@@ -96,6 +112,7 @@ export function usePhotoGallery()
   };
 
   return {
+    deletePhoto,
     photos,
     takePhoto,
   };
