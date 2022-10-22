@@ -1,11 +1,11 @@
-import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { camera } from 'ionicons/icons';
+import { IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonImg, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { camera, trash, close } from 'ionicons/icons';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 import { usePhotoGallery } from '../hooks/usePhotoGallery';
 
 const Tab2: React.FC = () => {
-  const {takePhoto} = usePhotoGallery();
+  const {photos, takePhoto} = usePhotoGallery();
   return (
     <IonPage>
       <IonHeader>
@@ -16,10 +16,21 @@ const Tab2: React.FC = () => {
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
+            <IonTitle size="large">Photo Gallery</IonTitle>
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Tab 2 page" />
+        <IonContent>
+          <IonGrid>
+            <IonRow>
+              {photos.map((photo, index) => (
+                <IonCol size="6" key={index}>
+                  <IonImg src={photo.webviewPath} />
+                </IonCol>
+              ))}
+            </IonRow>
+          </IonGrid>
+        </IonContent>        
         <IonFab vertical="bottom" horizontal="center" slot="fixed">
           <IonFabButton onClick={() => takePhoto()}>
           <IonIcon icon={camera}></IonIcon>
