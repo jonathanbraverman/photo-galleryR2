@@ -1,7 +1,5 @@
 {
   "name": "photo-galleryR2",
-  "integrations": {
-    "capacitor": {}
-  },
+  "integrations": {},
   "type": "react"
 }
